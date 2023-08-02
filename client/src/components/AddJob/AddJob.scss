@@ -1,0 +1,31 @@
+.add-job-form {
+  @apply w-2/4;
+
+  h3 {
+    @apply font-extrabold text-lg mb-3;
+  }
+
+  .btn {
+    @apply text-white bg-primary;
+
+    &:hover {
+      @apply opacity-75 bg-primary text-white;
+    }
+
+    &:disabled {
+      @apply text-white bg-primary opacity-50;
+    }
+  }
+
+  .form-control {
+    @apply my-1;
+  }
+
+  .input {
+    @apply input-bordered;
+  }
+
+  .error-message {
+    @apply text-red-500 pt-2 text-xs
+  }
+}

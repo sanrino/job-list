@@ -1,0 +1,32 @@
+GET http://localhost:3000/users
+
+###
+
+GET http://localhost:3000/jobs
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/jobs
+Content-Type: application/json
+
+{
+  "title": "Hello World",
+  "authorEmail": "alice@prisma.io"
+}
+
+###
+
+PUT http://localhost:3000/post/1/views
+
+###
+
+PUT http://localhost:3000/publish/5
+
+###
+
+GET http://localhost:3000/user/3/drafts
+
+###
+
+GET http://localhost:3000/feed

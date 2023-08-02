@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "lib": [
+      "esnext",
+      "es6",
+      "dom",
+      "es2017",
+      "es2016",
+    ],
+    "esModuleInterop": true
+  }
+}
