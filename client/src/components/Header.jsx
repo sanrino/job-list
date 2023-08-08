@@ -6,7 +6,6 @@ const Header = () => {
     <header className='header'>
       <ul className="menu menu-vertical lg:menu-horizontal text-center text-white">
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
       </ul>
     </header>
   )

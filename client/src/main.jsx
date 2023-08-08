@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { RouterProvider } from 'react-router-dom';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { RouterProvider } from 'react-router-dom';
 import { routing } from './routing/routing.jsx';
+
 import './index.scss';
 
 const client = new QueryClient({

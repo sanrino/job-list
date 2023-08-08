@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from "../UI/Card";
 import { Stack } from "../UI/Stack";
 import { Badge } from '../UI/Badge';
+import { Link } from 'react-router-dom';
 
 const JobPosition = (job) => {
 
@@ -25,6 +26,7 @@ const JobPosition = (job) => {
     handleAddFilter
   } = job;
 
+
   const languagesJ = languages.split(',');
   const toolsJ = tools ? tools?.split(',') : [];
 
@@ -41,7 +43,6 @@ const JobPosition = (job) => {
               :
               <img className="job-position-avatar" src="./images/default-img.jpg" alt={company} />
           }
-          {/* <img className="job-position-avatar" src={logo} alt={company} /> */}
           <div className="job-position-body">
             <div className="job-postion-company">
               <h3>{company}</h3>
@@ -60,11 +61,13 @@ const JobPosition = (job) => {
                 </Stack>
               )}
             </div>
-            <h2 className="job-position-title">{position}</h2>
+            <h2 className="job-position-title">
+              <Link to={`/job-edit/${id}`}>{position}</Link>
+            </h2>
             <Stack>
-              <div className="job-position-meta">{postedAt}</div>
-              <div className="job-position-meta">{contract}</div>
-              <div className="job-position-meta">{location}</div>
+              {postedAt && <div className="job-position-meta">{postedAt}</div>}
+              {contract && <div className="job-position-meta">{contract}</div>}
+              {location && <div className="job-position-meta">{location}</div>}
             </Stack>
           </div>
         </div>

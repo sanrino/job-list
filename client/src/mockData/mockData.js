@@ -1,4 +1,4 @@
-export const languages = [
+export const languagesData = [
 	{ value: 'javaScript', label: 'JavaScript' },
 	{ value: 'html', label: 'HTML' },
 	{ value: 'css', label: 'CSS' },
@@ -6,7 +6,7 @@ export const languages = [
 	{ value: 'ruby', label: 'Ruby' },
 ];
 
-export const tools = [
+export const toolsData = [
 	{ value: 'react', label: 'React' },
 	{ value: 'scss', label: 'Scss' },
 	{ value: 'sass', label: 'Sass' },

@@ -1,10 +1,9 @@
 import React from 'react';
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { AboutPage } from "../pages/AboutPage";
 import { ErrorPage } from "../pages/ErrorPage";
 import { HomePage } from "../pages/HomePage";
-import { PostPage } from '../pages/PostPage';
+import { JobEditPage } from '../pages/JobEditPage';
 
 export const routing = createBrowserRouter([
 	{
@@ -17,12 +16,8 @@ export const routing = createBrowserRouter([
 				index: true
 			},
 			{
-				path: 'about',
-				element: <AboutPage />
-			},
-			{
-				path: 'post/:id',
-				element: <PostPage />
+				path: 'job-edit/:id',
+				element: <JobEditPage />,
 			}
 		]
 	}

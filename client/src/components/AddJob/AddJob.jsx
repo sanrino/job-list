@@ -6,18 +6,14 @@ import { useCreateJobQuery } from '../../hooks/useAddJobQuery';
 import { Input } from '../Form/Input';
 import { Label } from '../Form/Label';
 
-import { tools, languages } from '../../mockData/mockData';
+import { toolsData, languagesData } from '../../mockData/mockData';
 
 import { Error } from '../Form/Error';
 import { Modal } from '../Modal/Modal';
-import { useFiltersContext } from '../../hooks/useFiltersContext';
-import { useAllJobsQuery } from '../../hooks/useAllJobsQuery';
 
-import './AddJob.scss';
+import { convertArrObjToStr, getValueSelect } from '../../utils/misc';
 
-export const getValue = (value, options) => {
-	return value ? options.find((option) => option.value === value) : ''
-}
+import '../Form/Form.scss';
 
 const AddJob = () => {
 	const {
@@ -33,9 +29,6 @@ const AddJob = () => {
 
 	const { createJob } = useCreateJobQuery();
 
-	const { filtersСurrent } = useFiltersContext();
-	const { refetch } = useAllJobsQuery(filtersСurrent);
-
 	const [open, setOpen] = useState(false);
 
 	const handleToggle = () => {
@@ -44,16 +37,17 @@ const AddJob = () => {
 	};
 
 	const onSubmit = async (data) => {
-		const convertArrObjToStr = (obj) => ((obj.map((item) => item.label.trim())).toString());
+
 		const newDataJob = {
-			...data, languages: convertArrObjToStr(data.languages),
+			...data,
+			languages: convertArrObjToStr(data.languages),
 			tools: convertArrObjToStr(data.tools),
+
 			new: true,
 			featured: true
 		};
 
 		await createJob(newDataJob);
-		await refetch();
 
 		reset();
 
@@ -61,13 +55,14 @@ const AddJob = () => {
 	}
 
 	return (
-		<div className="add-job-form">
+		<div className="add-job-form job-form">
 
 			<button className="btn" onClick={handleToggle}>
 				+ Add job
 			</button>
 
 			<Modal open={open} onClose={handleToggle}>
+
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<h3>Add job</h3>
 					<div className="form-control">
@@ -81,17 +76,6 @@ const AddJob = () => {
 
 						{errors?.company && <Error value={errors?.company.message} />}
 					</div>
-
-					{/* <div className="form-control">
-					<Input
-						label="Your email"
-						name="email"
-						register={register}
-						required="This field is required!"
-					/>
-
-					{errors?.email && <Error value={errors?.email.message} />}
-				</div> */}
 
 					<div className="form-control">
 						<Input
@@ -151,16 +135,18 @@ const AddJob = () => {
 							rules={{
 								required: "This field is required!",
 							}}
-							render={({ field: { onChange, value }, fieldState: { error } }) => (
+							render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
 								<>
 									<Select
 										isMulti
 										placeholder='Languages'
-										options={languages}
-										value={getValue(value, languages)}
+										options={languagesData}
+										value={getValueSelect(value, languagesData)}
 										onChange={(newValue) => onChange(newValue)}
+
 										className="react-select-container"
 										classNamePrefix="react-select"
+										onBlur={onBlur}
 									/>
 
 									{error &&
@@ -172,28 +158,23 @@ const AddJob = () => {
 					</div>
 
 					<div className="form-control">
-						<Label title="Your tools" required={true} />
+						<Label title="Your tools" />
 
 						<Controller
 							control={control}
 							name='tools'
-							rules={{
-								required: "This field is required!",
-							}}
-							render={({ field: { onChange, value }, fieldState: { error } }) => (
+							render={({ field: { onChange, onBlur, value } }) => (
 								<>
 									<Select
 										isMulti
 										placeholder='Tools'
-										options={tools}
-										value={getValue(value, tools)}
+										options={toolsData}
+										value={getValueSelect(value, toolsData)}
 										onChange={(newValue) => onChange(newValue)}
+										onBlur={onBlur}
 										className="react-select-container"
 										classNamePrefix="react-select"
 									/>
-									{error &&
-										<div className="error-message">{error.message}</div>
-									}
 								</>
 							)}
 						/>

@@ -1,6 +1,7 @@
-.add-job-form {
+.job-form {
   @apply w-2/4;
 
+  h1,
   h3 {
     @apply font-extrabold text-lg mb-3;
   }
@@ -27,5 +28,27 @@
 
   .error-message {
     @apply text-red-500 pt-2 text-xs
+  }
+}
+
+.edit-job-form {
+  .add-job-form {
+    @apply mr-auto ml-auto pt-20;
+
+    h1 {
+      @apply text-2xl font-extrabold mb-5;
+    }
+
+    @screen md {
+      @apply w-3/4;
+    }
+  }
+
+  form {
+    @apply flex justify-between flex-wrap;
+
+    .form-control {
+      width: 46%;
+    }
   }
 }
