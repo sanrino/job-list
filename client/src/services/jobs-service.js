@@ -1,4 +1,4 @@
-const API_URL = 'https://job-listings-silk.vercel.app/';
+const API_URL = 'https://job-listings-silk.vercel.app';
 
 export const JobService = {
   async getById(id) {
