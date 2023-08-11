@@ -10,11 +10,20 @@ app.use(cors());
 
 app.use(express.json());
 
-
 app.get('/users', async (req, res) => {
   const result = await prisma.user.findMany();
   res.json(result);
 })
+
+app.get(`/job/:id`, async (req, res) => {
+  const { id } = req.params;
+
+  const result = await prisma.jobPosition.findUnique({
+    where: { id: Number(id) },
+  });
+
+  res.json(result);
+});
 
 app.post(`/jobs`, async (req, res) => {
   const payload = req.body;
@@ -43,7 +52,7 @@ app.post(`/jobs`, async (req, res) => {
     },
     orderBy: {
       id: "desc"
-    }
+    },
   });
 
   res.json(result);
@@ -53,10 +62,28 @@ app.post(`/create`, async (req, res) => {
   const result = await prisma.jobPosition.create({
     data: {
       ...req.body,
+      author: {
+        connect: {
+          email: "photosnap@prisma.io"
+        }
+      }
     },
-
   })
+
   res.json(result)
+});
+
+app.put(`/update/:id`, async (req, res) => {
+  const { id } = req.params;
+
+  const result = await prisma.jobPosition.update({
+    where: { id: Number(id) },
+    data: {
+      ...req.body,
+    },
+  });
+
+  res.json(result);
 })
 
 const server = app.listen(3000, () =>
