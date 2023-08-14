@@ -1,4 +1,4 @@
-const API_URL = 'https://job-listings-5thy3efjd-mssanrino-gmailcom.vercel.app';
+const API_URL = '';
 
 export const JobService = {
   async getById(id) {
