@@ -4,8 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.ts",
-    "postinstall": "prisma generate",
-    "build": "prisma generate"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "4.16.2",
