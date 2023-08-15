@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import express from 'express';
 
+
 const cors = require('cors');
 
 const port = process.env.PORT || 3000;
@@ -11,6 +12,15 @@ app.use(cors());
 
 app.use(express.json());
 
+app.get("/api", (req, res) => {
+  res.send("Selamat datang di API akuh");
+});
+
+const jobRouter = require('./routes/job.router')
+
+app.use("/api/jobs", jobRouter);
+
+/*
 app.get('/users', async (req, res) => {
   const result = await prisma.user.findMany();
   res.json(result);
@@ -86,6 +96,7 @@ app.put(`/update/:id`, async (req, res) => {
 
   res.json(result);
 })
+*/
 
 const server = app.listen(port, () =>
   console.log(`
