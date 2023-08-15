@@ -39,6 +39,27 @@ const jobController = {
       res.json({ msg: error.msg })
     }
   },
+
+  createJob: async (req, res) => {
+    try {
+      const result = await prisma.jobPosition.create({
+        data: {
+          ...req.body,
+          author: {
+            connect: {
+              email: "photosnap@prisma.io"
+            }
+          }
+        },
+      })
+
+      return res.json(result);
+
+    } catch (error) {
+      res.json({ msg: error.msg })
+    }
+  }
+
   // getById: async(req, res) => {
   //     try {
   //         const { rows } = await postgre.query("select * from books where book_id = $1", [req.params.id])
