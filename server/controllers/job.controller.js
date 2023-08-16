@@ -1,37 +1,16 @@
-const prisma = require("../db");
+const {
+  allJobs,
+  createJob,
+  updateJob,
+  findJobById
+} = require("../service/job-service");
 
 const jobController = {
   getAllJob: async (req, res) => {
     try {
       const payload = req.body;
-      const buildQuery = (key, items) => {
-        return items.map((item) => ({ [key]: { contains: item } }));
-      };
-
-      let filters = [];
-
-      for (let key in payload) {
-        if (payload[key].length) {
-          filters = [...filters, ...buildQuery(`${key}`, payload[key])]
-        }
-      }
-
-      const or = (filters.length) ? {
-        OR: [
-          ...filters
-        ]
-      } : {};
-
-      const result = await prisma.jobPosition.findMany({
-        where: {
-          ...or
-        },
-        orderBy: {
-          id: "desc"
-        },
-      });
-
-      return res.json(result);
+      const jobs = await allJobs(payload);
+      return res.json(jobs);
 
     } catch (error) {
       res.json({ msg: error.msg })
@@ -40,17 +19,9 @@ const jobController = {
 
   createJob: async (req, res) => {
     try {
-      const result = await prisma.jobPosition.create({
-        data: {
-          ...req.body,
-          author: {
-            connect: {
-              email: "photosnap@prisma.io"
-            }
-          }
-        },
-      })
-      return res.json(result);
+      const job = req.body;
+      const jobs = await createJob(job);
+      return res.json(jobs);
 
     } catch (error) {
       res.json({ msg: error.msg })
@@ -60,13 +31,9 @@ const jobController = {
   updateJobById: async (req, res) => {
     try {
       const { id } = req.params;
+      const jobs = req.body;
 
-      const result = await prisma.jobPosition.update({
-        where: { id: Number(id) },
-        data: {
-          ...req.body,
-        },
-      });
+      const result = await updateJob(id, jobs);
       res.json(result);
 
     } catch (error) {
@@ -77,16 +44,13 @@ const jobController = {
   getJobById: async (req, res) => {
     try {
       const { id } = req.params;
-
-      const result = await prisma.jobPosition.findUnique({
-        where: { id: Number(id) },
-      });
+      const result = await findJobById(id);
       res.json(result);
 
     } catch {
       res.json({ msg: error.msg })
     }
   }
-}
+};
 
-module.exports = jobController
+module.exports = jobController;
