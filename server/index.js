@@ -1,24 +1,15 @@
-import { PrismaClient } from '@prisma/client'
-import express from 'express';
-
+const express = require("express");
 
 const cors = require('cors');
+const jobRouter = require('./routes/job.router');
 
 const port = process.env.PORT || 3000;
-const prisma = new PrismaClient();
 const app = express();
 
 app.use(cors());
-
 app.use(express.json());
 
-app.get("/api", (req, res) => {
-  res.send("Selamat datang di API akuh");
-});
-
-const jobRouter = require('./routes/job.router')
-
-app.use("/api/jobs", jobRouter);
+app.use("/jobs", jobRouter);
 
 /*
 app.get('/users', async (req, res) => {
