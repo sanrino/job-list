@@ -26,7 +26,6 @@ const JobPosition = (job) => {
     handleAddFilter
   } = job;
 
-
   const languagesJ = languages.split(',');
   const toolsJ = tools ? tools?.split(',') : [];
 
@@ -38,7 +37,7 @@ const JobPosition = (job) => {
       <div className="job-position">
         <div className="job-position-info">
           {
-            logo?.length > 0 ?
+            logo?.length ?
               <img className="job-position-avatar" src={logo} alt={company} />
               :
               <img className="job-position-avatar" src="./images/default-img.jpg" alt={company} />

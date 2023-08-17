@@ -61,6 +61,7 @@ const JobEdit = () => {
       ...data,
       languages: convertArrObjToStr(data.languages),
       tools: convertArrObjToStr(data.tools),
+
       new: true,
       featured: true
     };
