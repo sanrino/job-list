@@ -1,4 +1,4 @@
-const API_URL_JOBS = 'https://job-list-server.vercel.app/jobs';
+const API_URL_JOBS = import.meta.env.VITE_API_URL;
 
 export const JobService = {
   async getById(id) {
