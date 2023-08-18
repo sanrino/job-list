@@ -1,4 +1,4 @@
-const API_URL_JOBS = `${import.meta.env.VITE_API_URL}/api/jobs`;
+const API_URL_JOBS = `${import.meta.env.VITE_API_URL}/jobs`;
 
 export const JobService = {
   async getById(id) {
