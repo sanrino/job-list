@@ -5,6 +5,8 @@ const prisma = new PrismaClient();
 const jobsData: any = [
   {
     email: 'photosnap@prisma.io',
+    password: '1234',
+    name: 'photosnap',
     jobs: {
       create: [{
         company: 'Photosnap',
@@ -22,6 +24,8 @@ const jobsData: any = [
   },
   {
     email: 'manage@prisma.io',
+    password: '1234',
+    name: 'manage',
     jobs: {
       create: [{
         company: 'Manage',
@@ -39,6 +43,8 @@ const jobsData: any = [
   },
   {
     email: 'account@prisma.io',
+    password: '1234',
+    name: 'Account',
     jobs: {
       create: [{
         company: 'Account',
@@ -58,6 +64,8 @@ const jobsData: any = [
 
   {
     email: 'myhomep@prisma.io',
+    password: '1234',
+    name: 'Myhomep',
     jobs: {
       create: [{
         company: "MyHome",
@@ -76,6 +84,8 @@ const jobsData: any = [
 
   {
     email: 'loopstudiosp@prisma.io',
+    password: '1234',
+    name: 'Loopstudiosp',
     jobs: {
       create: [{
         company: "Loop Studios",
@@ -95,6 +105,8 @@ const jobsData: any = [
 
   {
     email: 'itsp@prisma.io',
+    password: '1234',
+    name: 'Itsp',
     jobs: {
       create: [{
         company: "It",
@@ -114,6 +126,8 @@ const jobsData: any = [
 
   {
     email: 'shortlyp@prisma.io',
+    password: '1234',
+    name: 'Shortly',
     jobs: {
       create: [{
         company: "Shortly",
@@ -133,6 +147,8 @@ const jobsData: any = [
 
   {
     email: 'insure@prisma.io',
+    password: '1234',
+    name: 'Insure',
     jobs: {
       create: [{
         company: "Insure",
@@ -152,6 +168,8 @@ const jobsData: any = [
 
   {
     email: 'eyecamcop@prisma.io',
+    password: '1234',
+    name: 'Eyecamcop',
     jobs: {
       create: [{
         company: "Eyecam Co.",
@@ -171,6 +189,8 @@ const jobsData: any = [
 
   {
     email: 'airfiltercompany@prisma.io',
+    password: '1234',
+    name: 'Airfilter',
     jobs: {
       create: [{
         company: "The Air Filter Company",

@@ -32,13 +32,25 @@ const allJobs = async (payload) => {
   return result;
 };
 
-const createJob = async (job) => {
+const allJobsUser = async (id) => {
+  const result = await prisma.user.findUnique({
+    where: { id: Number(id) },
+  }).jobs({
+    orderBy: {
+      id: "desc"
+    },
+  });
+
+  return result;
+};
+
+const createJob = async (job, email) => {
   const result = await prisma.jobPosition.create({
     data: {
       ...job,
       author: {
         connect: {
-          email: "photosnap@prisma.io"
+          email: email
         }
       }
     },
@@ -63,11 +75,21 @@ const findJobById = async (id) => {
   });
 
   return result;
+};
+
+const deleteJob = async (id) => {
+  const result = await prisma.jobPosition.delete({
+    where: { id: Number(id) },
+  });
+
+  return result;
 }
 
 module.exports = {
   allJobs,
+  allJobsUser,
   createJob,
   updateJob,
-  findJobById
+  findJobById,
+  deleteJob
 };

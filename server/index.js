@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require('cors');
 const routes = require('./src/routes/index.js');
 
+const errorHandler = require('./src/middleware/ErrorHandlingMiddleware.js')
+
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -10,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api", routes);
+
+app.use(errorHandler)
 
 const server = app.listen(port, () =>
   console.log(`

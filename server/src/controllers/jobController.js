@@ -1,8 +1,10 @@
 const {
   allJobs,
+  allJobsUser,
   createJob,
   updateJob,
-  findJobById
+  findJobById,
+  deleteJob
 } = require("../service/job-service");
 
 const jobController = {
@@ -17,10 +19,23 @@ const jobController = {
     }
   },
 
-  createJob: async (req, res) => {
+  getAllJobsUser: async (req, res) => {
     try {
-      const job = req.body;
-      const jobs = await createJob(job);
+      const { id } = req.params;
+      const jobs = await allJobsUser(id);
+      return res.json(jobs);
+
+    } catch (error) {
+      res.json({ msg: error.msg })
+    }
+  },
+
+
+  createJob: async (req, res) => {
+    const { data, email } = req.body;
+
+    try {
+      const jobs = await createJob(data, email);
       return res.json(jobs);
 
     } catch (error) {
@@ -45,6 +60,17 @@ const jobController = {
     try {
       const { id } = req.params;
       const result = await findJobById(id);
+      res.json(result);
+    } catch {
+      console.log(error);
+      res.json({ msg: error.msg })
+    }
+  },
+
+  deleteJobById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await deleteJob(id);
       res.json(result);
 
     } catch {
