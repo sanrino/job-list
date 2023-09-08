@@ -1,9 +1,9 @@
 import React from 'react';
-import { App } from '../App';
+import { Home } from '../components/Home';
 
 const HomePage = () => {
 	return (
-		<App />
+		<Home />
 	)
 }
 

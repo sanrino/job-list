@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { useForm, Controller } from "react-hook-form";
-import { useCreateJobQuery } from '../../hooks/useAddJobQuery';
+import { useCreateJobQuery } from '../../hooks/query/useAddJobQuery';
 
 import { Input } from '../Form/Input';
 import { Label } from '../Form/Label';
-
-import { toolsData, languagesData } from '../../mockData/mockData';
-
 import { Error } from '../Form/Error';
 import { Modal } from '../Modal/Modal';
 
 import { convertArrObjToStr, getValueSelect } from '../../utils/misc';
+import { toolsData, languagesData } from '../../mockData/mockData';
+import { useUserContext } from '../../hooks/context/useUserContext';
 
 import '../Form/Form.scss';
 
 const AddJob = () => {
+
 	const {
 		register,
 		formState: { errors, isValid },
@@ -28,6 +28,7 @@ const AddJob = () => {
 	});
 
 	const { createJob } = useCreateJobQuery();
+	const { user } = useUserContext();
 
 	const [open, setOpen] = useState(false);
 
@@ -44,10 +45,10 @@ const AddJob = () => {
 			tools: convertArrObjToStr(data.tools),
 
 			new: true,
-			featured: true
+			featured: true,
 		};
 
-		await createJob(newDataJob);
+		await createJob({ data: newDataJob, email: user?.email });
 
 		reset();
 

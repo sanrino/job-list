@@ -21,4 +21,3 @@ export const convertArrObjToStr = (obj) => {
   const labels = obj?.map(item => item.label) || [];
   return labels.join(', ');
 };
-

@@ -1,7 +1,10 @@
 .job-form {
   @apply w-2/4;
 
-  h1,
+  h1 {
+    @apply text-2xl font-extrabold mb-5;
+  }
+
   h3 {
     @apply font-extrabold text-lg mb-3;
   }
@@ -29,15 +32,19 @@
   .error-message {
     @apply text-red-500 pt-2 text-xs
   }
+
+  &.auth-form {
+    @apply mr-auto ml-auto pt-20;
+
+    @screen md {
+      @apply w-1/2;
+    }
+  }
 }
 
 .edit-job-form {
   .add-job-form {
     @apply mr-auto ml-auto pt-20;
-
-    h1 {
-      @apply text-2xl font-extrabold mb-5;
-    }
 
     @screen md {
       @apply w-3/4;
@@ -48,7 +55,13 @@
     @apply flex justify-between flex-wrap;
 
     .form-control {
-      width: 46%;
+      @apply w-full;
+
+      @screen md {
+        width: 46%;
+      }
     }
   }
+
+
 }

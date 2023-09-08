@@ -1,35 +1,35 @@
 import React from 'react';
-import Select from 'react-select';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import Select from 'react-select';
 import { Controller, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { useJobIdQuery } from '../hooks/useJobIdQuery';
-import { languagesData, toolsData } from '../mockData/mockData';
 
 import { Error } from './Form/Error';
 import { Input } from './Form/Input';
 import { Label } from './Form/Label';
 import { Loading } from './Loading/Loading';
 
+import { useJobIdQuery } from '../hooks/query/useJobIdQuery';
+import { useUpdateJobQuery } from '../hooks/query/useUpdateJobQuery';
+import { useDeleteJobQuery } from '../hooks/query/useDeleteJobQuery';
+
+import { languagesData, toolsData } from '../mockData/mockData';
 import { convertArrObjToStr } from '../utils/misc';
-
-import { useNavigate } from "react-router-dom";
-
-import { useUpdateJobQuery } from '../hooks/useUpdateJobQuery';
+import { PROFILE_ROUTE } from '../utils/consts';
 
 import './Form/Form.scss';
 
 const JobEdit = () => {
+  let navigate = useNavigate();
 
   const { id } = useParams();
 
-  const { isLoading, job } = useJobIdQuery(id);
+  const { isLoading, isFetching, job } = useJobIdQuery(id);
 
   const { updateJob } = useUpdateJobQuery();
+  const { deleteJobById } = useDeleteJobQuery();
 
   const defaultStringValue = '';
-
-  let navigate = useNavigate();
 
   const values = {
     id: job?.id || defaultStringValue,
@@ -56,7 +56,6 @@ const JobEdit = () => {
   });
 
   const onSubmit = async (data) => {
-
     const newDataJob = {
       ...data,
       languages: convertArrObjToStr(data.languages),
@@ -67,14 +66,21 @@ const JobEdit = () => {
     };
 
     await updateJob(newDataJob);
+  }
 
-    navigate("/");
+  const deleteJob = async (event, id) => {
+    event.preventDefault();
+
+    await deleteJobById(id);
+
+    navigate(PROFILE_ROUTE);
   }
 
   return (
     <div className='edit-job-form job-form container'>
+
       {
-        isLoading ? <Loading /> : <div className='add-job-form'>
+        isLoading || isFetching ? <Loading /> : <div className='add-job-form'>
           <h1>{job?.company}</h1>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -193,6 +199,7 @@ const JobEdit = () => {
             </div>
             <div className='my-5'>
               <button className="btn" disabled={!isValid}>Save</button>
+              <button className="btn ml-3" type='button' onClick={(event) => deleteJob(event, job?.id)}>Delete</button>
             </div>
           </form>
         </div>

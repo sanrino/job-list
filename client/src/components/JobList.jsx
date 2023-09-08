@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { useAllJobsQuery } from '../hooks/useAllJobsQuery';
-import { useFiltersContext } from '../hooks/useFiltersContext';
+import { useAllJobsQuery } from '../hooks/query/useAllJobsQuery';
+import { useFiltersContext } from '../hooks/context/useFiltersContext';
 
 import { Loading } from './Loading/Loading';
 import { JobPosition } from "./JobPosition";
-import { AddJob } from './AddJob/AddJob';
 
 const JobList = () => {
+
   const { filtersСurrent, setFiltersСurrent } = useFiltersContext();
 
-  const { isLoading, jobs } = useAllJobsQuery(filtersСurrent);
+  const { isLoading, isFetching, jobs } = useAllJobsQuery(filtersСurrent);
 
   const handleAddFilter = (postShort) => {
     const postNew = { ...postShort };
@@ -32,9 +32,7 @@ const JobList = () => {
 
   return (
     <div className="job-list">
-      <AddJob />
-
-      {isLoading ? <Loading /> :
+      {isLoading || isFetching ? <Loading /> :
         jobs?.length && jobs.map((job) => (
           <JobPosition
             key={job.id}

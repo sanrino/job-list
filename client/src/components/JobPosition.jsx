@@ -4,6 +4,7 @@ import { Card } from "../UI/Card";
 import { Stack } from "../UI/Stack";
 import { Badge } from '../UI/Badge';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../hooks/context/useUserContext';
 
 const JobPosition = (job) => {
 
@@ -30,6 +31,9 @@ const JobPosition = (job) => {
   const toolsJ = tools ? tools?.split(',') : [];
 
   const badges = [].concat(role ? role : [], level ? level : [], ...languagesJ, ...toolsJ);
+
+  const { user } = useUserContext();
+  const { isAuth } = user;
 
   return (
     <Card id={id} isFeatured={featured}>
@@ -60,9 +64,17 @@ const JobPosition = (job) => {
                 </Stack>
               )}
             </div>
-            <h2 className="job-position-title">
-              <Link to={`/job-edit/${id}`}>{position}</Link>
-            </h2>
+            {
+              isAuth ?
+                <h2 className="job-position-title">
+                  <Link to={`/job-edit/${id}`}>{position}</Link>
+                </h2>
+                :
+                <h2 className="job-position-title">
+                  {position}
+                </h2>
+            }
+
             <Stack>
               {postedAt && <div className="job-position-meta">{postedAt}</div>}
               {contract && <div className="job-position-meta">{contract}</div>}
@@ -70,6 +82,7 @@ const JobPosition = (job) => {
             </Stack>
           </div>
         </div>
+
         <Stack>
           {
             badges.map((badge) => (

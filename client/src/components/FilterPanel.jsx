@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFiltersContext } from '../hooks/useFiltersContext';
+import { useFiltersContext } from '../hooks/context/useFiltersContext';
 
 import { Badge } from '../UI/Badge';
 import { Card } from '../UI/Card';
@@ -35,7 +35,7 @@ const FilterPanel = () => {
   };
 
   if (!filtersPanel.length) {
-    return false
+    return false;
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label } from './Label'
 
-const Input = ({ label, name, placeholder, register, required }) => {
+const Input = ({ label, name, placeholder, type, register, required }) => {
 
   return (
     <>
@@ -10,6 +10,7 @@ const Input = ({ label, name, placeholder, register, required }) => {
       <input
         className="input"
         placeholder={placeholder}
+        type={type}
 
         {...register(name, {
           required,

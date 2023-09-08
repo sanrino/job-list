@@ -51,6 +51,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-color: var(--primary);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .link {
@@ -85,6 +88,7 @@ body {
   box-shadow: var(--shadow);
   border-left: 5px solid var(--grey-100);
   margin-top: -32px;
+  margin-bottom: 32px;
 
   &-wrapper {
     padding: 10px;
@@ -203,12 +207,12 @@ body {
   &-title {
     margin-top: 1rem;
     font-size: 1.25rem;
-    cursor: pointer;
 
-    &:hover {
-      color: var(--primary);
+    a {
+      &:hover {
+        color: var(--primary);
+      }
     }
-
   }
 
   &-meta {

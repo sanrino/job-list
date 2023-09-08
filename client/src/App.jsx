@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import FiltersProvider from './providers/FiltersProvider';
+import { RouterProvider } from 'react-router-dom';
+import { Loading } from './components/Loading/Loading';
+import { useTokenCheckQuery } from './hooks/query/useTokenCheckQuery';
+import { routing } from './routing';
 
-import { FilterPanel } from './components/FilterPanel';
-import { JobList } from './components/JobList';
+const App = () => {
+  const { check, isLoading, isFetching } = useTokenCheckQuery();
 
-function App() {
+  useEffect(() => {
+    check();
+  }, []);
+
+  if (isLoading && isFetching) {
+    <Loading />
+  }
+
   return (
     <>
-      <div className="container">
-        <FiltersProvider>
-          <FilterPanel />
-          <JobList />
-        </FiltersProvider>
-      </div>
+      <RouterProvider router={routing} />
     </>
   )
 }

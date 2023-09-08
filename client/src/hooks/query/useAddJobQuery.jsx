@@ -1,24 +1,25 @@
 import { useMutation, useQueryClient } from "react-query";
-import { JobService } from "../services/jobs-service";
+import { JobService } from "../../services/jobs-service";
 
 const useCreateJobQuery = () => {
   const client = useQueryClient();
 
   const { isLoading, mutateAsync: createJob } = useMutation({
     mutationKey: 'create job',
-    mutationFn: JobService.create,
+    mutationFn: (data, email) => JobService.create(data, email),
 
     onError: (error) => {
       console.log(`${error} Job not added!`);
     },
 
     onSuccess: (newJob) => {
-      client.setQueriesData(['jobs list'], (oldJobs) => {
-        return [newJob, ...(oldJobs || [])]
+      client.setQueriesData(['user jobs list'], (oldData) => {
+        const oldJobs = oldData ? { ...oldData } : [];
+        return [newJob, oldJobs]
       });
 
       client.invalidateQueries({
-        queryKey: ['jobs list'],
+        queryKey: ['user jobs list'],
         refetchType: "none"
       })
 
