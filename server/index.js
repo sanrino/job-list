@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use("/api", routes);
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 const server = app.listen(port, () =>
   console.log(`
