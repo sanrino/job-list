@@ -27,14 +27,20 @@ export const AuthService = {
   },
 
   async check() {
-    const res = await fetch(`${API_URL_AUTH}/auth`, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+    const token = localStorage.getItem('token');
 
-    return res.json();
+    if (token) {
+      const res = await fetch(`${API_URL_AUTH}/auth`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      return res.json();
+
+    } else {
+      console.log("Not authorized! front");
+    }
   },
 }

@@ -41,11 +41,13 @@ export const JobService = {
   },
 
   async update(dataJob) {
+    const token = localStorage.getItem('token');
     const res = await fetch(`${API_URL_JOBS}/update/${dataJob?.id}`, {
       method: "PUT",
       body: JSON.stringify(dataJob),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     })
     return res.json();

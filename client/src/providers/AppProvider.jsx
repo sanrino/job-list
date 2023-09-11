@@ -3,6 +3,12 @@ import jwt_decode from "jwt-decode";
 
 export const AppContext = createContext(null);
 
+export const baseUserData = {
+  id: '',
+  email: '',
+  isAuth: false,
+};
+
 const AppProvider = ({ children }) => {
 
   let value = {};
@@ -19,12 +25,6 @@ const AppProvider = ({ children }) => {
   const valueFilters = useMemo(() => ({ filtersСurrent, setFiltersСurrent, baseFilters }), [filtersСurrent]);
 
   //USER
-  const baseUserData = {
-    id: '',
-    email: '',
-    isAuth: false,
-  };
-
   const getUserLocalStorage = () => {
     const token = localStorage.getItem('token');
 
