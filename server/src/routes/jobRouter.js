@@ -10,7 +10,7 @@ router.get("/profile/:id", jobController.getAllJobsUser); //profile user jobs
 
 router.get("/:id", jobController.getJobById);
 
-router.post("/create", jobController.createJob);
+router.post("/create", authMiddleware, jobController.createJob);
 
 router.put("/update/:id", authMiddleware, jobController.updateJobById);
 
