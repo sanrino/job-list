@@ -12,7 +12,6 @@ const Login = () => {
     register,
     formState: { errors, isValid },
     handleSubmit,
-    reset
 
   } = useForm({
     mode: 'onBlur',
@@ -20,7 +19,6 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     await login(data);
-    reset();
   };
 
   return (

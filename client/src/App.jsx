@@ -5,15 +5,19 @@ import { Loading } from './components/Loading/Loading';
 import { useTokenCheckQuery } from './hooks/query/useTokenCheckQuery';
 import { routing } from './routing';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const App = () => {
   const { check, isLoading, isFetching } = useTokenCheckQuery();
 
   useEffect(() => {
-    check();
+    if (localStorage.getItem('token')) {
+      check();
+    }
   }, []);
 
   if (isLoading && isFetching) {
-    <Loading />
+    return <Loading />;
   }
 
   return (

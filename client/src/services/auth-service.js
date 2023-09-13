@@ -30,6 +30,7 @@ export const AuthService = {
     const token = localStorage.getItem('token');
 
     if (token) {
+      console.log("object");
       const res = await fetch(`${API_URL_AUTH}/auth`, {
         method: "GET",
         headers: {
@@ -40,7 +41,7 @@ export const AuthService = {
       return res.json();
 
     } else {
-      console.log("Not authorized! front");
+      console.log("Not authorized!");
     }
   },
 }

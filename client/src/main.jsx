@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 
 import { App } from './App.jsx';
 import { AppProvider } from './providers/AppProvider.jsx';
+import { ToastContainer } from 'react-toastify';
 
 import './index.scss';
 
@@ -22,6 +23,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={client}>
       <AppProvider>
         <App />
+
+        <ToastContainer />
       </AppProvider>
     </QueryClientProvider>
   </React.StrictMode>,

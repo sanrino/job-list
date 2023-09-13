@@ -49,7 +49,7 @@ export const JobService = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    });
     return res.json();
   },
 

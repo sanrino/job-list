@@ -3,9 +3,9 @@ import jwt_decode from "jwt-decode";
 
 import { AuthService } from "../../services/auth-service";
 import { useUserContext } from "../context/useUserContext";
+import { toast } from 'react-toastify';
 
 const useTokenCheckQuery = () => {
-
   const { setUser } = useUserContext();
 
   const { isLoading, isFetching, mutate: check } = useMutation({
@@ -35,6 +35,7 @@ const useTokenCheckQuery = () => {
           isAuth: false,
         });
         localStorage.removeItem('token');
+        toast.error(data?.message);
       }
     },
   })
