@@ -65,3 +65,21 @@
 
 
 }
+
+.add-job-form {
+  h3 {
+    @apply w-full;
+  }
+
+  form {
+    @screen md {
+      @apply flex flex-wrap justify-between;
+    }
+  }
+
+  .form-control {
+    @screen md {
+      width: (calc(50% - 10px));
+    }
+  }
+}

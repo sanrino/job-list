@@ -14,14 +14,14 @@ const useCreateJobQuery = () => {
 
     onSuccess: (newJob) => {
       client.setQueriesData(['user jobs list'], (oldData) => {
-        const oldJobs = oldData ? { ...oldData } : [];
-        return [newJob, oldJobs]
+        const result = [newJob, ...(oldData || [])];
+        return result;
       });
 
-      client.invalidateQueries({
-        queryKey: ['user jobs list'],
-        refetchType: "none"
-      })
+      // client.invalidateQueries({
+      //   queryKey: ['user jobs list'],
+      //   refetchType: "none"
+      // })
 
       //query => update on client of key =>jobs list
       // client.invalidateQueries({ queryKey: 'jobs list' });

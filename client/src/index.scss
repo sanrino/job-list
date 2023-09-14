@@ -53,7 +53,7 @@ body {
   background-color: var(--primary);
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 .link {
@@ -276,11 +276,15 @@ body {
   .react-select {
     &__control {
       min-height: 48px;
-      @apply border-gray-100
+      @apply border-gray-100;
     }
 
     &__indicator-separator {
       @apply bg-gray-100
     }
   }
+}
+
+.home-icon {
+  @apply w-7;
 }

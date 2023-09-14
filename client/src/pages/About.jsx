@@ -1,12 +1,8 @@
-import React from 'react'
-import { useUserContext } from '../hooks/context/useUserContext';
+import React from 'react';
 
 const About = () => {
-  const { user } = useUserContext();
-  console.log({ user });
-
   return (
-    <div>About</div>
+    <div className='container'>About</div>
   )
 }
 

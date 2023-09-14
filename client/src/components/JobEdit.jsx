@@ -72,8 +72,6 @@ const JobEdit = () => {
     event.preventDefault();
 
     await deleteJobById(id);
-
-    navigate(PROFILE_ROUTE);
   }
 
   return (

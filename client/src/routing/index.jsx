@@ -55,11 +55,6 @@ export const routing = createBrowserRouter([
 					</UnAuthenticated>
 				),
 			},
-
-			{
-				path: ABOUT_ROUTE,
-				element: <About />,
-			}
 		]
 	}
 ]);

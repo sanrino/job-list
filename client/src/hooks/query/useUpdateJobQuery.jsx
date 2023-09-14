@@ -20,13 +20,12 @@ const useUpdateJobQuery = () => {
     },
 
     onSuccess: (data) => {
+      // client.invalidateQueries({ queryKey: 'job' });
 
-      client.invalidateQueries({ queryKey: 'job' });
-
-      client.invalidateQueries({ queryKey: 'jobs list' });
+      // client.invalidateQueries({ queryKey: 'jobs list' });
 
       //update cache on client
-      // client.setQueriesData(['job'], () => updateJob);
+      client.setQueriesData(['job'], () => data);
 
       navigate(PROFILE_ROUTE);
 

@@ -11,7 +11,7 @@ const useJobsUserQuery = (id) => {
     // keepPreviousData: true,
 
     onError: (error) => {
-      console.log(`${error} user jobs list `);
+      console.log(`${error} user jobs list`);
     },
   })
 

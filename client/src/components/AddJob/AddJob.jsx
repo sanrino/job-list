@@ -180,7 +180,7 @@ const AddJob = () => {
 							)}
 						/>
 					</div>
-					<div className='my-5'>
+					<div className='mt-5 w-full'>
 						<button className="btn" disabled={!isValid}>Save</button>
 					</div>
 				</form>

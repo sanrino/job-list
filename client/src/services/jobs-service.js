@@ -30,11 +30,14 @@ export const JobService = {
   },
 
   async create({ data, email }) {
+    const token = localStorage.getItem('token');
+
     const res = await fetch(`${API_URL_JOBS}/create`, {
       method: "POST",
       body: JSON.stringify({ data, email }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     })
     return res.json();
@@ -42,6 +45,7 @@ export const JobService = {
 
   async update(dataJob) {
     const token = localStorage.getItem('token');
+
     const res = await fetch(`${API_URL_JOBS}/update/${dataJob?.id}`, {
       method: "PUT",
       body: JSON.stringify(dataJob),
@@ -54,10 +58,13 @@ export const JobService = {
   },
 
   async delete(id) {
+    const token = localStorage.getItem('token');
+
     const res = await fetch(`${API_URL_JOBS}/delete/${id}`, {
       method: "DELETE",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     })
     return res.json();

@@ -30,7 +30,6 @@ export const AuthService = {
     const token = localStorage.getItem('token');
 
     if (token) {
-      console.log("object");
       const res = await fetch(`${API_URL_AUTH}/auth`, {
         method: "GET",
         headers: {
