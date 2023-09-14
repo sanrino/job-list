@@ -14,7 +14,7 @@ router.post("/create", authMiddleware, jobController.createJob);
 
 router.put("/update/:id", authMiddleware, jobController.updateJobById);
 
-router.delete("/delete/:id", jobController.deleteJobById);
+router.delete("/delete/:id", authMiddleware, jobController.deleteJobById);
 
 module.exports = router;
 
