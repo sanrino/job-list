@@ -3,8 +3,9 @@ import React from 'react';
 import { Card } from "../UI/Card";
 import { Stack } from "../UI/Stack";
 import { Badge } from '../UI/Badge';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useUserContext } from '../hooks/context/useUserContext';
+import { PROFILE_ROUTE } from '../utils/consts';
 
 const JobPosition = (job) => {
 
@@ -27,13 +28,16 @@ const JobPosition = (job) => {
     handleAddFilter
   } = job;
 
-  const languagesJ = languages.split(',');
+  const languagesJ = languages?.split(', ');
+
   const toolsJ = tools ? tools?.split(',') : [];
 
   const badges = [].concat(role ? role : [], level ? level : [], ...languagesJ, ...toolsJ);
 
   const { user } = useUserContext();
   const { isAuth } = user;
+
+  const locationUrl = useLocation().pathname;
 
   return (
     <Card id={id} isFeatured={featured}>
@@ -64,16 +68,20 @@ const JobPosition = (job) => {
                 </Stack>
               )}
             </div>
-            {
-              isAuth ?
-                <h2 className="job-position-title">
-                  <Link to={`/job-edit/${id}`}>{position}</Link>
-                </h2>
-                :
-                <h2 className="job-position-title">
-                  {position}
-                </h2>
-            }
+
+            <h2 className="job-position-title">
+
+              {
+                isAuth && locationUrl === `${PROFILE_ROUTE}` ?
+                  <>
+                    <Link to={`/job-edit/${id}`}>
+                      {position}
+                    </Link>
+                  </>
+                  :
+                  (position)
+              }
+            </h2>
 
             <Stack>
               {postedAt && <div className="job-position-meta">{postedAt}</div>}
@@ -83,18 +91,25 @@ const JobPosition = (job) => {
           </div>
         </div>
 
-        <Stack>
-          {
-            badges.map((badge) => (
-              <Badge
-                key={badge}
-                onClick={() => handleAddFilter({ badge, role, level, languages, tools })}
-              >
-                {badge}
-              </Badge>
-            ))
-          }
-        </Stack>
+        {
+          <Stack>
+            {
+              badges.map((badge) => (
+                <Badge
+                  key={badge}
+                  onClick={() => {
+                    if (locationUrl !== `${PROFILE_ROUTE}`) {
+                      handleAddFilter({ badge, role, level, languages, tools })
+                    }
+                  }}
+                >
+                  {badge}
+                </Badge>
+              ))
+            }
+          </Stack>
+        }
+
       </div>
     </Card>
   );

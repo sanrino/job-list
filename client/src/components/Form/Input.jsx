@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label } from './Label'
 
-const Input = ({ label, name, placeholder, type, register, required }) => {
+const Input = ({ label, name, placeholder, type, accept, register, required, onChange }) => {
 
   return (
     <>
@@ -11,10 +11,10 @@ const Input = ({ label, name, placeholder, type, register, required }) => {
         className="input"
         placeholder={placeholder}
         type={type}
+        accept={accept}
 
         {...register(name, {
           required,
-
           ...name === "email" &&
           {
             maxLength: {
@@ -35,6 +35,7 @@ const Input = ({ label, name, placeholder, type, register, required }) => {
           //     "Email address must be a valid address",
           // },
         })}
+        onChange={onChange}
       />
     </>
   )

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
-import { languagesData, toolsData } from "../../mockData/mockData";
+import { languagesData, positionData, roleData, toolsData } from "../../mockData/mockData";
 import { JobService } from "../../services/jobs-service";
-import { selectedValues } from "../../utils/misc";
+import { selectedValue, selectedValues } from "../../utils/misc";
 
 const useJobIdQuery = (id) => {
 
@@ -20,10 +20,13 @@ const useJobIdQuery = (id) => {
       return {
         ...data,
         languages: selectedValues(data?.languages, languagesData),
-        tools: selectedValues(data?.tools, toolsData)
+        tools: selectedValues(data?.tools, toolsData),
+
+        position: selectedValue(data?.position, positionData),
+        role: selectedValue(data?.role, roleData)
       }
     },
-  })
+  });
 
   return { isLoading, isFetching, job }
 };

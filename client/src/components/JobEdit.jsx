@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Select from 'react-select';
@@ -13,14 +13,12 @@ import { useJobIdQuery } from '../hooks/query/useJobIdQuery';
 import { useUpdateJobQuery } from '../hooks/query/useUpdateJobQuery';
 import { useDeleteJobQuery } from '../hooks/query/useDeleteJobQuery';
 
-import { languagesData, toolsData } from '../mockData/mockData';
-import { convertArrObjToStr } from '../utils/misc';
-import { PROFILE_ROUTE } from '../utils/consts';
+import { languagesData, positionData, roleData, toolsData } from '../mockData/mockData';
+import { convertArrObjToStr, convertFileToBase64 } from '../utils/misc';
 
 import './Form/Form.scss';
 
 const JobEdit = () => {
-  let navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -28,6 +26,10 @@ const JobEdit = () => {
 
   const { updateJob } = useUpdateJobQuery();
   const { deleteJobById } = useDeleteJobQuery();
+
+  //logo url
+  const [logoUrl, setLogoUrl] = useState(null);
+  const serverLogoUrl = job && job?.logo;
 
   const defaultStringValue = '';
 
@@ -56,23 +58,45 @@ const JobEdit = () => {
   });
 
   const onSubmit = async (data) => {
+
+    const base64Logo = await convertFileToBase64(data?.logo[0]);
+
     const newDataJob = {
       ...data,
       languages: convertArrObjToStr(data.languages),
       tools: convertArrObjToStr(data.tools),
+
+      position: data?.position?.label,
+      role: data?.role?.label,
+
+      logo: base64Logo,
 
       new: true,
       featured: true
     };
 
     await updateJob(newDataJob);
-  }
+  };
 
   const deleteJob = async (event, id) => {
     event.preventDefault();
 
     await deleteJobById(id);
-  }
+  };
+
+  const handleLogoChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setLogoUrl(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className='edit-job-form job-form container'>
@@ -82,6 +106,7 @@ const JobEdit = () => {
           <h1>{job?.company}</h1>
 
           <form onSubmit={handleSubmit(onSubmit)}>
+
             <div className="form-control">
               <Input
                 label="Your company name"
@@ -95,24 +120,93 @@ const JobEdit = () => {
             </div>
 
             <div className="form-control">
+
               <Input
-                label="Your position"
-                name="position"
-                placeholder="Senior Frontend Developer"
+                label="Your company logo"
+                name="logo"
+                type="file"
+                placeholder="Company logo"
+                accept="image/png, image/jpeg"
                 register={register}
-                required="This field is required!"
+                onChange={handleLogoChange}
+              // filePicker={filePickerRef}
               />
-              {errors?.position &&
-                <Error value={errors?.position.message} />
+              {/* 
+              <button onClick={handlePick}>Pick file</button> */}
+
+              {
+                logoUrl || serverLogoUrl ?
+
+                  <img
+                    src={logoUrl || serverLogoUrl}
+                    alt={job?.company}
+                    style={{ maxWidth: '100px', maxHeight: '100px' }}
+                  />
+                  :
+                  <>
+                    <div>
+                      <p>No logo uploaded</p>
+                      <img
+                        src='../../public/images/default-img.jpg'
+                        alt={job?.company}
+                        style={{ maxWidth: '100px', maxHeight: '100px' }}
+                      />
+                    </div>
+                  </>
+
               }
             </div>
 
             <div className="form-control">
-              <Input
-                label="Your role"
-                name="role"
-                placeholder="Frontend"
-                register={register}
+              <Label title="Your position" required={true} />
+
+              <Controller
+                control={control}
+                name='position'
+                rules={{
+                  required: "This field is required!",
+                }}
+                render={({ field: { onChange, onBlur }, fieldState: { error } }) => (
+                  <>
+                    <Select
+                      placeholder='Senior Frontend Developer'
+                      options={positionData}
+                      defaultValue={values?.position}
+                      onChange={(newValue) => onChange(newValue)}
+
+                      className="react-select-container"
+                      classNamePrefix="react-select"
+                      onBlur={onBlur}
+                    />
+
+                    {error &&
+                      <Error value={error.message} />
+                    }
+                  </>
+                )}
+              />
+            </div>
+
+            <div className="form-control">
+              <Label title="Your role" />
+
+              <Controller
+                control={control}
+                name='role'
+                render={({ field: { onChange, onBlur } }) => (
+                  <>
+                    <Select
+                      placeholder='Frontend'
+                      options={roleData}
+                      defaultValue={values?.role}
+                      onChange={(newValue) => onChange(newValue)}
+
+                      className="react-select-container"
+                      classNamePrefix="react-select"
+                      onBlur={onBlur}
+                    />
+                  </>
+                )}
               />
             </div>
 

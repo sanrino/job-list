@@ -1,3 +1,7 @@
 .profile-wrapper {
   @apply flex flex-col;
+
+  .badge {
+    cursor: default;
+  }
 }

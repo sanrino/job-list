@@ -13,6 +13,7 @@ const useCreateJobQuery = () => {
     },
 
     onSuccess: (newJob) => {
+
       client.setQueriesData(['user jobs list'], (oldData) => {
         const result = [newJob, ...(oldData || [])];
         return result;

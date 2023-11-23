@@ -13,7 +13,7 @@ const JobListProfile = () => {
 
   const { isLoading, isFetching, jobs } = useJobsUserQuery(id);
 
-  if (!jobs?.length) {
+  if (!jobs?.length && !isLoading) {
     return <InfoPanel infoText="Your jobs were not found or you have not created them yet!" />
   }
 

@@ -8,8 +8,8 @@ import { Label } from '../Form/Label';
 import { Error } from '../Form/Error';
 import { Modal } from '../Modal/Modal';
 
-import { convertArrObjToStr, getValueSelect } from '../../utils/misc';
-import { toolsData, languagesData } from '../../mockData/mockData';
+import { convertArrObjToStr, convertFileToBase64, getValueSelect } from '../../utils/misc';
+import { toolsData, languagesData, positionData, roleData } from '../../mockData/mockData';
 import { useUserContext } from '../../hooks/context/useUserContext';
 
 import '../Form/Form.scss';
@@ -39,10 +39,20 @@ const AddJob = () => {
 
 	const onSubmit = async (data) => {
 
+		const base64Logo = await convertFileToBase64(data?.logo[0]);
+
 		const newDataJob = {
 			...data,
 			languages: convertArrObjToStr(data.languages),
 			tools: convertArrObjToStr(data.tools),
+
+			position: data?.position?.label || '',
+			role: data?.role?.label || '',
+
+			// position: convertArrObjToStr(data.position),
+			// role: convertArrObjToStr(data.role),
+
+			logo: base64Logo,
 
 			new: true,
 			featured: true,
@@ -80,23 +90,65 @@ const AddJob = () => {
 
 					<div className="form-control">
 						<Input
-							label="Your position"
-							name="position"
-							placeholder="Senior Frontend Developer"
+							label="Your company logo"
+							name="logo"
+							type="file"
+							placeholder="Company logo"
+							accept="image/png, image/jpeg"
 							register={register}
-							required="This field is required!"
 						/>
-						{errors?.position &&
-							<Error value={errors?.position.message} />
-						}
 					</div>
 
 					<div className="form-control">
-						<Input
-							label="Your role"
-							name="role"
-							placeholder="Frontend"
-							register={register}
+						<Label title="Your position" required={true} />
+
+						<Controller
+							control={control}
+							name='position'
+							rules={{
+								required: "This field is required!",
+							}}
+							render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+								<>
+									<Select
+										placeholder='Senior Frontend Developer'
+										options={positionData}
+										value={getValueSelect(value, positionData)}
+										onChange={(newValue) => onChange(newValue)}
+
+										className="react-select-container"
+										classNamePrefix="react-select"
+										onBlur={onBlur}
+									/>
+
+									{error &&
+										<Error value={error.message} />
+									}
+								</>
+							)}
+						/>
+					</div>
+
+					<div className="form-control">
+						<Label title="Your role" />
+
+						<Controller
+							control={control}
+							name='role'
+							render={({ field: { onChange, onBlur, value } }) => (
+								<>
+									<Select
+										placeholder='Frontend'
+										options={roleData}
+										value={getValueSelect(value, roleData)}
+										onChange={(newValue) => onChange(newValue)}
+
+										className="react-select-container"
+										classNamePrefix="react-select"
+										onBlur={onBlur}
+									/>
+								</>
+							)}
 						/>
 					</div>
 

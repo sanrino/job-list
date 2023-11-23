@@ -8,6 +8,7 @@ export const JobService = {
   },
 
   async getAll(filters) {
+    console.log("first", filters)
     const res = await fetch(`${API_URL_JOBS}`, {
       method: "POST",
       body: JSON.stringify(filters),
@@ -39,7 +40,8 @@ export const JobService = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    });
+
     return res.json();
   },
 
