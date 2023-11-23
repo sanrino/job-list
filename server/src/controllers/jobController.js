@@ -1,3 +1,6 @@
+const uuid = require('uuid');
+const path = require('path');
+
 const {
   allJobs,
   allJobsUser,
@@ -30,12 +33,12 @@ const jobController = {
     }
   },
 
-
   createJob: async (req, res) => {
     const { data, email } = req.body;
 
     try {
       const jobs = await createJob(data, email);
+
       return res.json(jobs);
 
     } catch (error) {

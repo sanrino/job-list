@@ -44,17 +44,21 @@ const allJobsUser = async (id) => {
   return result;
 };
 
-const createJob = async (job, email) => {
+const createJob = async (job, email, logo) => {
+
   const result = await prisma.jobPosition.create({
     data: {
       ...job,
+      logo: job?.logo,
+
       author: {
         connect: {
           email: email
         }
       }
     },
-  })
+  });
+
   return result;
 }
 

@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require('express-fileupload');
 
 const cors = require('cors');
 const routes = require('./src/routes/index.js');
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload({}));
 
 app.use("/api", routes);
 
