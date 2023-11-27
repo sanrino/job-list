@@ -36,6 +36,7 @@ const Input = ({ label, name, placeholder, type, accept, register, required, onC
           // },
         })}
         onChange={onChange}
+      // ref={refValue}
       />
     </>
   )

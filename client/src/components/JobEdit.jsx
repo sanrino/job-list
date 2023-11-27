@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Select from 'react-select';
 import { Controller, useForm } from 'react-hook-form';
@@ -14,7 +14,9 @@ import { useUpdateJobQuery } from '../hooks/query/useUpdateJobQuery';
 import { useDeleteJobQuery } from '../hooks/query/useDeleteJobQuery';
 
 import { languagesData, positionData, roleData, toolsData } from '../mockData/mockData';
-import { convertArrObjToStr, convertFileToBase64 } from '../utils/misc';
+import { convertArrObjToStr } from '../utils/misc';
+
+import remove from '../assets/images/icon-remove.svg';
 
 import './Form/Form.scss';
 
@@ -29,14 +31,17 @@ const JobEdit = () => {
 
   //logo url
   const [logoUrl, setLogoUrl] = useState(null);
-  const serverLogoUrl = job && job?.logo;
+
+  useEffect(() => {
+    setLogoUrl(job && job?.logo);
+  }, [job]);
 
   const defaultStringValue = '';
 
   const values = {
     id: job?.id || defaultStringValue,
     company: job?.company || defaultStringValue,
-    logo: job?.logo || defaultStringValue,
+    logo: logoUrl || defaultStringValue,
     position: job?.position || defaultStringValue,
     role: job?.role || defaultStringValue,
     level: job?.level || defaultStringValue,
@@ -58,8 +63,7 @@ const JobEdit = () => {
   });
 
   const onSubmit = async (data) => {
-
-    const base64Logo = await convertFileToBase64(data?.logo[0]);
+    // const base64Logo = await convertFileToBase64(data?.logo[0]);
 
     const newDataJob = {
       ...data,
@@ -69,7 +73,7 @@ const JobEdit = () => {
       position: data?.position?.label,
       role: data?.role?.label,
 
-      logo: base64Logo,
+      logo: logoUrl,
 
       new: true,
       featured: true
@@ -98,6 +102,10 @@ const JobEdit = () => {
     }
   };
 
+  const handleRemoveFile = () => {
+    setLogoUrl(null);
+  };
+
   return (
     <div className='edit-job-form job-form container'>
 
@@ -106,7 +114,6 @@ const JobEdit = () => {
           <h1>{job?.company}</h1>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-
             <div className="form-control">
               <Input
                 label="Your company name"
@@ -119,7 +126,7 @@ const JobEdit = () => {
               {errors?.company && <Error value={errors?.company.message} />}
             </div>
 
-            <div className="form-control">
+            <div className="form-control form-control--file-upload">
 
               <Input
                 label="Your company logo"
@@ -129,32 +136,37 @@ const JobEdit = () => {
                 accept="image/png, image/jpeg"
                 register={register}
                 onChange={handleLogoChange}
-              // filePicker={filePickerRef}
               />
-              {/* 
-              <button onClick={handlePick}>Pick file</button> */}
-
-              {
-                logoUrl || serverLogoUrl ?
-
-                  <img
-                    src={logoUrl || serverLogoUrl}
-                    alt={job?.company}
-                    style={{ maxWidth: '100px', maxHeight: '100px' }}
-                  />
-                  :
-                  <>
-                    <div>
-                      <p>No logo uploaded</p>
+              <div className="file-img">
+                {
+                  logoUrl ?
+                    <div className="file-upload-img">
                       <img
-                        src='../../public/images/default-img.jpg'
+                        src={logoUrl}
                         alt={job?.company}
-                        style={{ maxWidth: '100px', maxHeight: '100px' }}
+                        className="img"
                       />
+                      <div
+                        className='file-upload-img--remove'
+                        onClick={handleRemoveFile}
+                      >
+                        <img src={remove} alt="" />
+                      </div>
                     </div>
-                  </>
+                    :
+                    <>
+                      <div className='file-not-upload-img'>
+                        <img
+                          src='../../public/images/add-file.svg'
+                          alt={job?.company}
+                          className="img"
+                        />
+                        <small><i>Please upload your logo!</i></small>
+                      </div>
+                    </>
 
-              }
+                }
+              </div>
             </div>
 
             <div className="form-control">
